@@ -5,7 +5,7 @@ const Usuario = require("../models/usuario");
 const userGet = async (req = request, res = response) => {
   /* const {q, nombre = 'No Name', apikey = '12313131', page = 1, limit} = req.query */
 
-  const { limit = 5, desde = 0 } = req.query;
+  const { limit = 20, desde = 0 } = req.query;
   //Get all users
 
   const [total, usuarios] = await Promise.all([
@@ -17,7 +17,7 @@ const userGet = async (req = request, res = response) => {
 
   res.json({
     total,
-    usuarios
+    usuarios,
   });
 };
 
@@ -59,19 +59,20 @@ const userPost = async (req, res = response) => {
 };
 
 const userDelete = async (req, res = response) => {
-  const { id } = req.params
-
-  //Delete Fisico => No recomendado
-  /* const usuario = await Usuario.findByIdAndDelete( id ); */
-
+  
+  const { id } = req.params;
+  
   const usuario = await Usuario.findByIdAndUpdate( id, {state:false} );
-
-
+  const usuarioAutenticado = req.usuario
+  
   res.json({
     msg: 'Se ha borrado con exito el usuario: ',
-    usuario
+    usuario,
+    usuarioAutenticado
   });
-};
+
+
+}
 
 module.exports = {
   userGet,

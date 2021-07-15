@@ -8,6 +8,7 @@ class Server {
     this.port = process.env.PORT;
     //Available routes
     this.usuariosPath = "/api/users";
+    this.authPath = "/api/auth";
 
     //DB Connect
     this.conectDB();
@@ -39,6 +40,7 @@ class Server {
   //Routes Methods:
   routes() {
     //Usamos este middleware para configurar nuestras rutas en otro archivo
+    this.app.use(this.authPath, require('../routes/auth'));
     this.app.use(this.usuariosPath, require("../routes/user"));
   }
 
