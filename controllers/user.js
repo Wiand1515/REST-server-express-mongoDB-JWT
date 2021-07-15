@@ -2,12 +2,16 @@ const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
 const Usuario = require("../models/usuario");
 
+
+//Obtener usuarios
 const userGet = async (req = request, res = response) => {
   /* const {q, nombre = 'No Name', apikey = '12313131', page = 1, limit} = req.query */
 
   const { limit = 20, desde = 0 } = req.query;
   //Get all users
 
+
+  //Compaginate
   const [total, usuarios] = await Promise.all([
     Usuario.countDocuments({state:true}),
     Usuario.find({state:true})
@@ -21,6 +25,8 @@ const userGet = async (req = request, res = response) => {
   });
 };
 
+
+//Actualizar usuarios
 const userPut = async (req, res = response) => {
   //
   const id = req.params.id;
@@ -40,6 +46,8 @@ const userPut = async (req, res = response) => {
   });
 };
 
+
+//Crear usuario
 const userPost = async (req, res = response) => {
   //Show response from post req
   const { nombre, correo, password, role } = req.body;
@@ -58,17 +66,19 @@ const userPost = async (req, res = response) => {
   });
 };
 
+//Borrar usuarios
 const userDelete = async (req, res = response) => {
   
   const { id } = req.params;
   
-  const usuario = await Usuario.findByIdAndUpdate( id, {state:false} );
+  
+  const usuario = await Usuario.findByIdAndUpdate( id, {state: false} );
   const usuarioAutenticado = req.usuario
   
   res.json({
     msg: 'Se ha borrado con exito el usuario: ',
     usuario,
-    usuarioAutenticado
+    usuarioAutenticado,    
   });
 
 

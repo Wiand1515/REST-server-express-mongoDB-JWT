@@ -20,6 +20,7 @@ const UsuarioSchema = Schema({
     role: {
         type: String,
         required: true,
+        default: 'USER_ROLE',
         emun: ['ADMIN_ROLE', 'USER_ROLE'],
     },
     state: {
@@ -29,7 +30,7 @@ const UsuarioSchema = Schema({
     google: {
         type: Boolean,
         default: false,
-    }
+    },
 });
 
 //Por scope debe ser una funcion normal para referencias de manera correcta THIS
