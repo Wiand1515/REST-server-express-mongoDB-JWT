@@ -28,7 +28,6 @@ const userGet = async (req = request, res = response) => {
 
 //Actualizar usuarios
 const userPut = async (req, res = response) => {
-  //
   const id = req.params.id;
   const { _id, password, google, correo, ...resto } = req.body;
 
